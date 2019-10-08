@@ -1,0 +1,79 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    title DEFAULT
+    // Bootstrap core CSS
+    link(href='/static/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(href='/static/font-awesome/css/font-awesome.min.css', rel='stylesheet')
+    link(href='/stylesheets/datepicker.css', rel='stylesheet')
+    
+    block append-header
+    
+    style.
+      .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      }
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+  body
+    header
+      #navbarHeader.collapse.bg-dark
+        .container
+          .row
+            .col-sm-8.col-md-7.py-4
+               h4.text-white 51Scrum
+               p.text-muted
+                | 성공과 실패의 상황이 50 : 50 일때 성공으로 가는 “1”
+                br
+                | 현장에서 함께 고민하고 문제를 정의하여 기술적인 솔루션을 찾아서 제공합니다
+                br
+                | Solve problem together
+            .col-sm-4.offset-md-1.py-4
+              h4.text-white Contact
+              ul.list-unstyled
+                li
+                  a.text-white(href='http://51scrum.gsshop.com', target="_blank") Visit to 51Scrum
+                li
+                  a.text-white(href='https://gsshop.facebook.com/groups/2150010228583856/', target="_blank") Like on Facebook
+      .navbar.navbar-dark.bg-dark.shadow-sm
+        .container.d-flex.justify-content-between
+          a.navbar-brand.d-flex.align-items-center(href='#')
+            svg.mr-2(xmlns='http://www.w3.org/2000/svg', width='20', height='20', fill='none', stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', aria-hidden='true', viewBox='0 0 24 24', focusable='false')
+              path(d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z')
+              circle(cx='12', cy='13', r='4')
+            strong Album
+          button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarHeader', aria-controls='navbarHeader', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+
+    main.container-fluid(role='main')
+      block content
+    
+
+    
+    footer.text-muted
+      .container
+        p.float-right
+          a(href='#') Back to top
+        p © 2019 51Scrum. All Rights Reserved.
+          
+    // /.container
+    script(src='/static/jquery/dist/jquery.min.js')
+    script(src='/static/jquery-datepicker/jquery-datepicker.js')
+    script(src='/static/block-ui/jquery.blockUI.js')
+    script(src='/static/bootstrap/dist/js/bootstrap.bundle.min.js', integrity='sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o', crossorigin='anonymous')
+    script(src='/static/bootstrap/js/dist/util.js')
+    script(src='/static/axios/dist/axios.js')
+    
+    block append-script

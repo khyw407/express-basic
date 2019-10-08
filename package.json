@@ -1,0 +1,55 @@
+{
+  "name": "default",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "postinstall": "node ./node_modules/frontend-dependencies/index.js"
+  },
+  "dependencies": {
+    "app-root-path": "^2.2.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~4.1.1",
+    "dotenv": "^8.0.0",
+    "express": "~4.16.4",
+    "express-session": "^1.16.1",
+    "frontend-dependencies": "^1.1.6",
+    "helmet": "^3.18.0",
+    "http-errors": "~1.7.2",
+    "https": "^1.0.0",
+    "moment-timezone": "^0.5.25",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.3",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.9.0"
+  },
+  "frontendDependencies": {
+    "target": "public/static/",
+    "packages": {
+      "jquery": {
+        "version": "3.1.0",
+        "namespace": true
+      },
+      "jquery-datepicker": {
+        "version": "^1.12.3",
+        "namespaced": true
+      },
+      "block-ui": {
+        "version": "2.70.1",
+        "namespace": true
+      },
+      "bootstrap": {
+        "version": "4.3.1",
+        "namespace": true
+      },
+      "axios": {
+        "version": "^0.18.0",
+        "namespace": true
+      },
+      "font-awesome": {
+        "version": "^4.7.0",
+        "namespace": true
+      }
+    }
+  }
+}
