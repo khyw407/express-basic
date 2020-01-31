@@ -2,7 +2,6 @@ node {
     podTemplate(label: 'build-application',
         containers: [
             containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat'),
-            containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.7.3', command: 'cat', ttyEnabled: true),
             containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', ttyEnabled: true, command: 'cat')
         ],
         volumes: [
@@ -41,9 +40,9 @@ node {
                     sh "helm repo update"
                     sh "apk add git"
                     sh "helm plugin install https://github.com/chartmuseum/helm-push"
-                    sh "helm push helm/ --version ${env.BUILD_NUMBER} --app-version ${env.BUILD_NUMBER} chartmuseum"
+                    sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
                     sh "helm repo update"
-                    sh "helm install --set image.tag=${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} --app-version ${env.BUILD_NUMBER} ${helmChartName} chartmuseum/${helmChartName}"
+                    sh "helm install ${helmChartName} --kubeconfig ./deploy/kubeconfig.yml --set image.tag=${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
                 }
             }
         }
