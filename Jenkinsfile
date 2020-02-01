@@ -35,15 +35,19 @@ node {
             }
             
             stage('Kubernetes Helm Deploy') {
-                container('helm'){
-                    sh "helm repo add chartmuseum chartmuseum-URL"
+                container('helm') {
+                    sh "helm repo add chartmuseum {chartmuseum url}"
                     sh "helm repo update"
                     sh "apk add git"
                     sh "helm plugin install https://github.com/chartmuseum/helm-push"
                     sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
                     sh "helm repo update"
-                    sh "helm uninstall --kubeconfig ./deploy/kubeconfig.yml ${helmChartName}"
-                    sh "helm install ${helmChartName} --kubeconfig ./deploy/kubeconfig.yml --set image.tag=${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
+                    def helmList = sh script: "helm list --kubeconfig ${kubeConfigPath} -q --namespace default", returnStdout: true
+                    if(helmList.contains("${helmChartName}")) {
+                        sh "helm upgrade ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
+                    }else{
+                        sh "helm install ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
+                    }
                 }
             }
         }
