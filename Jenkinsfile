@@ -36,16 +36,24 @@ node {
             
             stage('Kubernetes Helm Deploy') {
                 container('helm') {
-                    sh "helm repo add chartmuseum {chartmuseum url}"
-                    sh "helm repo update"
-                    sh "apk add git"
-                    sh "helm plugin install https://github.com/chartmuseum/helm-push"
-                    sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
-                    sh "helm repo update"
+                    try{
+                        sh "helm repo add chartmuseum http://chartmuseum-chartmuseum.chartmuseum.10.52.181.241.xip.io/"
+                        sh "helm repo update"
+                        sh "apk add git"
+                        sh "helm plugin install https://github.com/chartmuseum/helm-push"
+                        sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
+                        sh "helm repo update"
+                    } catch (e) {
+                        error("Error occured in the helm contain");
+                    }
+
                     def helmList = sh script: "helm list --kubeconfig ${kubeConfigPath} -q --namespace default", returnStdout: true
+                    
                     if(helmList.contains("${helmChartName}")) {
+                        echo "Already installed. Upgrade from helm repository!"
                         sh "helm upgrade ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
                     }else{
+                        echo "Install from helm repository!"
                         sh "helm install ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
                     }
                 }
