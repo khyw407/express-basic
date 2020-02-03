@@ -41,6 +41,7 @@ node {
                         sh "helm repo update"
                         sh "apk add git"
                         sh "helm plugin install https://github.com/chartmuseum/helm-push"
+                        sh "sed -i 's/project_name#branch_name/${helmChartName}/g' ./deploy/helm/Chart.yaml"
                         sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
                         sh "helm repo update"
                     } catch (e) {
