@@ -44,17 +44,17 @@ node {
                         sh "helm push ./deploy/helm/ --version ${env.BUILD_NUMBER} chartmuseum"
                         sh "helm repo update"
                     } catch (e) {
-                        error("Error occured in the helm contain");
+                        error("Error occured in the helm container");
                     }
 
                     def helmList = sh script: "helm list --kubeconfig ${kubeConfigPath} -q --namespace default", returnStdout: true
                     
                     if(helmList.contains("${helmChartName}")) {
                         echo "Already installed. Upgrade from helm repository!"
-                        sh "helm upgrade ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
+                        sh "helm upgrade ${helmChartName} --kubeconfig ${kubeConfigPath} --set name=${helmChartName},configmap.name=configmap-${helmChartName},deployment.name=deployment-${helmChartName},service.name=service-${helmChartName},ingress.name=ingress-${helmChartName},ingress.host=${ingressHost},image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER},version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
                     }else{
                         echo "Install from helm repository!"
-                        sh "helm install ${helmChartName} --kubeconfig ${kubeConfigPath} --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} --set version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
+                        sh "helm install ${helmChartName} --kubeconfig ${kubeConfigPath} --set name=${helmChartName},configmap.name=configmap-${helmChartName},deployment.name=deployment-${helmChartName},service.name=service-${helmChartName},ingress.name=ingress-${helmChartName},ingress.host=${ingressHost},image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER},version=${env.BUILD_NUMBER} --version ${env.BUILD_NUMBER} chartmuseum/${helmChartName}"
                     }
                 }
             }
