@@ -8,23 +8,26 @@
   },
   "dependencies": {
     "app-root-path": "^2.2.1",
-    "cookie-parser": "~1.4.4",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "debug": "~4.1.1",
     "dotenv": "^8.0.0",
+    "ejs": "^3.1.5",
     "express": "~4.16.4",
     "express-session": "^1.16.1",
     "frontend-dependencies": "^1.1.6",
+    "fs": "0.0.1-security",
     "helmet": "^3.18.0",
     "http-errors": "~1.7.2",
     "https": "^1.0.0",
     "moment-timezone": "^0.5.25",
     "morgan": "~1.9.1",
-    "pug": "^2.0.3",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.9.0"
   },
   "frontendDependencies": {
-    "target": "public/static/",
+    "target": "public/lib/external",
     "packages": {
       "jquery": {
         "version": "3.1.0",
@@ -42,14 +45,15 @@
         "version": "4.3.1",
         "namespace": true
       },
-      "axios": {
-        "version": "^0.18.0",
-        "namespace": true
-      },
       "font-awesome": {
         "version": "^4.7.0",
         "namespace": true
       }
     }
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1"
   }
 }
