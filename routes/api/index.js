@@ -1,11 +1,9 @@
 const router = require('express').Router();
-const winston = require(`${__basedir}/config/winston`);
+const logger = require(`${__basedir}/lib/logger`);
 
-
-router.get('/', function(req, res, next) {
-  winston.debug("API CALL")
+router.get('/', (req, res, next) => {
+  logger.debug("API CALL")
   res.render('index', { title: 'Express' });
 });
-
 
 module.exports = router;
